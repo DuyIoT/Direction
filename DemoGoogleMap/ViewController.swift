@@ -9,14 +9,18 @@
 import UIKit
 import GoogleMaps
 import CoreLocation
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet weak var mapView: GMSMapView!
     let locationManager = CLLocationManager()
     let direction = DirectionService()
+    var originLatitude: Double = 0
+    var originLongtitude: Double = 0
+    var destinationLatitude: Double = 0
+    var destinationLongtitude: Double = 0
+    var travelMode = TravelModes.driving
     override func viewDidLoad() {
         super.viewDidLoad()
-        determineMyCurrentLocation()
         initMapView()
         getDirection()
         // Do any additional setup after loading the view, typically from a nib.
@@ -35,41 +39,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
-    func determineMyCurrentLocation() {
-        locationManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//    func determineMyCurrentLocation() {
+//        locationManager.requestAlwaysAuthorization()
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.delegate = self
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager.startUpdatingLocation()
+//        }
+//    }
+    func initMapView() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        mapView.settings.myLocationButton = true
+        mapView.isMyLocationEnabled = true
+        mapView.delegate = self
+        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
             locationManager.startUpdatingLocation()
         }
     }
-    func initMapView() {
-        let camera = GMSCameraPosition.camera(withLatitude: 21.016950, longitude: 105.783746, zoom: 5.0)
-        mapView.camera = camera
-        mapView.settings.myLocationButton = true
-        mapView.isMyLocationEnabled = true
-        let marker = GMSMarker()
-        marker.title = "KeangNam Landmark"
-        marker.snippet = "Hà Nội"
-        marker.position = CLLocationCoordinate2DMake(21.016950, 105.783746)
-        marker.map = mapView
-    }
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let locationUser = locations.first {
-            print(locationUser.coordinate)
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        let arlert = UIAlertController(title: "Lỗi", message: "Chưa cài đặt location", preferredStyle: .alert)
-        let btnOK = UIAlertAction(title: "Đồng ý", style: .default, handler: nil)
-        arlert.addAction(btnOK)
-        self.present(arlert, animated: true, completion: nil)
-    }
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if(status == CLAuthorizationStatus.denied) {
-            showLocationDisabledPopUp()
-        }
-    }
+    
     fileprivate func drawRoute() {
         for step in self.direction.selectSteps {
             if step.polyline.points != "" {
@@ -98,6 +88,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         alertController.addAction(openAction)
         self.present(alertController, animated: true, completion: nil)
+    }
+}
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        manager.stopUpdatingLocation()
+        if let location: CLLocation = locations.last {
+            let locationLatitude = location.coordinate.latitude
+            let locationLongtitude = location.coordinate.longitude
+            self.originLatitude = locationLatitude
+            self.originLongtitude = locationLongtitude
+            let marker = GMSMarker()
+            marker.title = "San Fransico"
+            marker.snippet = "USA"
+            marker.position = CLLocationCoordinate2D(latitude: locationLatitude, longitude: locationLongtitude)
+            marker.map = mapView
+            let camera = GMSCameraPosition.camera(
+                withLatitude: locationLatitude,
+                longitude: locationLongtitude, zoom: 15.0)
+            if mapView.isHidden {
+                mapView.isHidden = false
+                mapView.camera = camera
+            } else {
+                mapView.animate(to: camera)
+            }
+        }
+    }
+
+    // Handle authorization for the location manager.
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    // Handle location manager errors.
+    func locationManager(_ manager: CLLocationManager,
+                         didFailWithError error: Error) {
+        locationManager.stopUpdatingLocation()
+        print("Error: \(error)")
+    }
+}
+extension ViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+        self.destinationLatitude = coordinate.latitude
+        self.destinationLongtitude = coordinate.longitude
+        let marker = GMSMarker(position: coordinate)
+        marker.map = self.mapView
+        print("CCCCCCCCCCc")
     }
 }
 

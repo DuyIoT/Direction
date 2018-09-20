@@ -87,12 +87,20 @@
 				84EEB29C21534A680014FA74 /* RouteDTO.swift */,
 				84EEB29E21534A900014FA74 /* DirectionOverview.swift */,
 				84EEB2A021534ABE0014FA74 /* GeocodedWaypoint.swift */,
-				84EEB2A4215357700014FA74 /* APIRequestProvider.swift */,
-				84EEB2A6215358710014FA74 /* APIServiceAgent.swift */,
-				84EEB2A8215358AF0014FA74 /* APIServiceObject.swift */,
 				84EEB2AA2153784F0014FA74 /* StepDTO.swift */,
 			);
 			path = DTOs;
+			sourceTree = "<group>";
+		};
+		84EEB2AC2153A2010014FA74 /* APIServices */ = {
+			isa = PBXGroup;
+			children = (
+				84EEB2A2215356020014FA74 /* DirectionService.swift */,
+				84EEB2A4215357700014FA74 /* APIRequestProvider.swift */,
+				84EEB2A6215358710014FA74 /* APIServiceAgent.swift */,
+				84EEB2A8215358AF0014FA74 /* APIServiceObject.swift */,
+			);
+			path = APIServices;
 			sourceTree = "<group>";
 		};
 		84EF7471214F462A00BD7F47 = {
@@ -116,6 +124,7 @@
 		84EF747C214F462A00BD7F47 /* DemoGoogleMap */ = {
 			isa = PBXGroup;
 			children = (
+				84EEB2AC2153A2010014FA74 /* APIServices */,
 				84EEB29121533DAF0014FA74 /* DTOs */,
 				84EF747D214F462A00BD7F47 /* AppDelegate.swift */,
 				84EF747F214F462A00BD7F47 /* ViewController.swift */,
@@ -124,7 +133,6 @@
 				84EF7489214F462B00BD7F47 /* LaunchScreen.storyboard */,
 				84EF748C214F462B00BD7F47 /* Info.plist */,
 				84EF7484214F462A00BD7F47 /* DemoGoogleMap.xcdatamodeld */,
-				84EEB2A2215356020014FA74 /* DirectionService.swift */,
 			);
 			path = DemoGoogleMap;
 			sourceTree = "<group>";
