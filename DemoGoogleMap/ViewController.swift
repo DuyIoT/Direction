@@ -11,6 +11,13 @@ import GoogleMaps
 import CoreLocation
 class ViewController: UIViewController {
     
+    @IBAction func requestDirection(_ sender: UIButton) {
+        let origin = originTextField.text?.description
+        let destination = destinationTextField.text?.description
+        getDirection(origin, destination)
+    }
+    @IBOutlet weak var destinationTextField: UITextField!
+    @IBOutlet weak var originTextField: UITextField!
     @IBOutlet weak var mapView: GMSMapView!
     let locationManager = CLLocationManager()
     let direction = DirectionService()
@@ -21,8 +28,8 @@ class ViewController: UIViewController {
     var travelMode = TravelModes.driving
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerDelegate()
         initMapView()
-        getDirection()
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -32,10 +39,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func getDirection() {
-        direction.getDirection("Disneyland", "Universal+Studios+Hollywood", "AIzaSyCMnoMIKYIFK7mj_SEP9aHomGENNtGrbGk") { (success) in
+    func getDirection(_ origin: String?, _ destination: String?) {
+        direction.getDirection(origin, destination, "AIzaSyBGftbNczf1_3Koz3DW1x0LtXiqUr_u8g4") { (success) in
+            print("BBBBBBB")
+            print(success)
             if success {
                 self.drawRoute()
+                print("AAAAAAAAAAAA")
+                print(self.direction.direction?.geocodedWaypoints.count ?? 0)
+                print(self.direction.direction?.status ?? "")
             }
         }
     }
@@ -47,6 +59,10 @@ class ViewController: UIViewController {
 //            locationManager.startUpdatingLocation()
 //        }
 //    }
+    func registerDelegate() {
+        originTextField.delegate = self
+        destinationTextField.delegate = self
+    }
     func initMapView() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -98,11 +114,6 @@ extension ViewController: CLLocationManagerDelegate {
             let locationLongtitude = location.coordinate.longitude
             self.originLatitude = locationLatitude
             self.originLongtitude = locationLongtitude
-            let marker = GMSMarker()
-            marker.title = "San Fransico"
-            marker.snippet = "USA"
-            marker.position = CLLocationCoordinate2D(latitude: locationLatitude, longitude: locationLongtitude)
-            marker.map = mapView
             let camera = GMSCameraPosition.camera(
                 withLatitude: locationLatitude,
                 longitude: locationLongtitude, zoom: 15.0)
@@ -136,7 +147,18 @@ extension ViewController: GMSMapViewDelegate {
         self.destinationLongtitude = coordinate.longitude
         let marker = GMSMarker(position: coordinate)
         marker.map = self.mapView
-        print("CCCCCCCCCCc")
+    }
+}
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == originTextField {
+            destinationTextField.becomeFirstResponder()
+        } else if textField == destinationTextField {
+            destinationTextField.resignFirstResponder()
+        } else {
+            
+        }
+        return true
     }
 }
 

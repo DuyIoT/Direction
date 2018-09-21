@@ -19,34 +19,64 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTT-mm-KuB" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="78" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dj5-M5-7CD">
-                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
-                                <color key="barTintColor" red="0.24705882352941178" green="0.37254901960784315" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Địa điểm bắt đầu" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PeF-wS-1Ot">
+                                <rect key="frame" x="5" y="21" width="307" height="30"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Địa điểm kết thúc" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CB8-rR-ASW">
+                                <rect key="frame" x="5" y="53" width="307" height="30"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXg-0g-1AC">
+                                <rect key="frame" x="313" y="21" width="62" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="62" id="sb5-fG-6lK"/>
+                                </constraints>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="requestDirection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="goS-hA-mwN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dj5-M5-7CD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4jF-oe-kwY"/>
+                            <constraint firstItem="PeF-wS-1Ot" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="1" id="4pk-Xl-AaM"/>
+                            <constraint firstItem="JXg-0g-1AC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="1" id="6hb-rK-n2i"/>
+                            <constraint firstItem="JXg-0g-1AC" firstAttribute="leading" secondItem="CB8-rR-ASW" secondAttribute="trailing" constant="1" id="FOk-eS-bIk"/>
                             <constraint firstItem="sTT-mm-KuB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="O0V-X1-mVJ"/>
-                            <constraint firstItem="dj5-M5-7CD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="lqQ-B4-al3"/>
+                            <constraint firstItem="sTT-mm-KuB" firstAttribute="top" secondItem="CB8-rR-ASW" secondAttribute="bottom" constant="1" id="f7B-dD-nnX"/>
+                            <constraint firstItem="PeF-wS-1Ot" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="gDW-bG-Myh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JXg-0g-1AC" secondAttribute="trailing" id="h8M-Ta-Rgn"/>
+                            <constraint firstItem="sTT-mm-KuB" firstAttribute="top" secondItem="JXg-0g-1AC" secondAttribute="bottom" constant="1" id="io1-PX-Z97"/>
+                            <constraint firstItem="JXg-0g-1AC" firstAttribute="leading" secondItem="PeF-wS-1Ot" secondAttribute="trailing" constant="1" id="kgK-8C-X4r"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sTT-mm-KuB" secondAttribute="bottom" id="ojk-5O-ywd"/>
-                            <constraint firstItem="dj5-M5-7CD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pRq-5M-cY6"/>
-                            <constraint firstItem="dj5-M5-7CD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rAq-l1-h4J"/>
+                            <constraint firstItem="CB8-rR-ASW" firstAttribute="top" secondItem="PeF-wS-1Ot" secondAttribute="bottom" constant="2" id="prG-3I-6CV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sTT-mm-KuB" secondAttribute="trailing" id="v0u-rS-IVQ"/>
-                            <constraint firstItem="sTT-mm-KuB" firstAttribute="top" secondItem="dj5-M5-7CD" secondAttribute="bottom" constant="2" id="v3h-Kt-ybI"/>
+                            <constraint firstItem="CB8-rR-ASW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="zhx-EU-XfC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="destinationTextField" destination="CB8-rR-ASW" id="ZBU-62-895"/>
                         <outlet property="mapView" destination="sTT-mm-KuB" id="t2L-6l-NS8"/>
+                        <outlet property="originTextField" destination="PeF-wS-1Ot" id="a8k-h7-pp2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="87.706146926536732"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="search" width="20" height="20"/>
+    </resources>
 </document>
